@@ -1,4 +1,5 @@
 <?php
+xoops_loadLanguage('main', 'tadtools');
 define('_MD_SHOW', 'Topic display');
 
 //月曆用
@@ -11,8 +12,8 @@ define('_W5', 'Fri');
 define('_W6', 'Sat');
 
 define('_M', 'Month');
-define('_WEEK', 'Week');
-define('_TODAY', 'Today');
+//define('_WEEK', 'Week');
+//define('_TODAY', 'Today');
 
 define('_MD_TADASSIGN_ASSN_LIST', 'List upload topic');
 define('_MD_TADASSIGN_ASSN', 'Upload sn');

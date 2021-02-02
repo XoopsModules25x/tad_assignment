@@ -1,5 +1,6 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
+xoops_loadLanguage('modinfo_common', 'tadtools');
+
 define('_MI_TADASSIGN_NAME', '作業上傳展示');
 define('_MI_TADASSIGN_AUTHOR', 'Tad (tad0616@gmail.com)');
 define('_MI_TADASSIGN_CREDITS', 'Michael Beck');
@@ -16,7 +17,7 @@ define('_MI_TADASSIGN_BDESC2', '會依照成績排序來取前幾名秀出');
 define('_MI_TADASSIGN_SMNAME2', '作品展示');
 
 define('_MI_TADASSIGN_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADASSIGN_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADASSIGN_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADASSIGN_BACK_2_ADMIN', '管理');
 
 //help

@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . "/modules/tadtools/language/{$xoopsConfig['language']}/modinfo_common.php";
+xoops_loadLanguage('modinfo_common', 'tadtools');
 
 define('_MI_TADASSIGN_NAME', 'Tad Assignment');
 define('_MI_TADASSIGN_AUTHOR', 'Tad (tad0616@gmail.com)');
@@ -17,7 +17,7 @@ define('_MI_TADASSIGN_BDESC2', 'Will follow the sort to take the top few results
 define('_MI_TADASSIGN_SMNAME2', 'Show works');
 
 define('_MI_TADASSIGN_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADASSIGN_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADASSIGN_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADASSIGN_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help

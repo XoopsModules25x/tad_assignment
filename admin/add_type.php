@@ -1,43 +1,43 @@
 <?php
-/*-----------§ﬁ§J¿…Æ◊∞œ--------------*/
-$xoopsOption['template_main'] = "tad_assignment_adm_add_type.tpl";
-include_once "header.php";
-include_once "../function.php";
+use XoopsModules\Tadtools\Utility;
+/*-----------ÂºïÂÖ•Ê™îÊ°àÂçÄ--------------*/
+$xoopsOption['template_main'] = 'tad_assignment_adm_add_type.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
-/*-----------function∞œ--------------*/
+/*-----------functionÂçÄ--------------*/
 
-//
 function add_type_form()
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
 
-    $all    = "";
-    $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_types") . " order by `type`";
-    $result = $xoopsDB->query($sql) or web_error($sql);
-    $i      = 0;
+    $all = [];
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $i = 0;
     while (list($type) = $xoopsDB->fetchRow($result)) {
-        $all[$i]['type'] = ($_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
+
+            $all[$i]['type'] = (\Xmf\Request::hasVar('t') && $_GET['t'] == $type) ? "<b style='color:red;'>$type</b>" : $type;
         $i++;
+
     }
     $xoopsTpl->assign('all', $all);
 }
 
-//
 function add_type()
 {
     global $xoopsDB;
-    $sql = "replace into " . $xoopsDB->prefix("tad_assignment_types") . " (`type`) values('{$_FILES['file']['type']}')";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = 'replace into ' . $xoopsDB->prefix('tad_assignment_types') . " (`type`) values('{$_FILES['file']['type']}')";
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     mk_type();
 }
 
-//
-function del_type($type = "")
+function del_type($type = '')
 {
     global $xoopsDB;
-    $sql = "delete from " . $xoopsDB->prefix("tad_assignment_types") . " where type='{$type}'";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $sql = 'delete from ' . $xoopsDB->prefix('tad_assignment_types') . " where type='{$type}'";
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     mk_type();
 }
@@ -45,45 +45,40 @@ function del_type($type = "")
 function mk_type()
 {
     global $xoopsDB;
-    $sql    = "select * from " . $xoopsDB->prefix("tad_assignment_types") . " order by `type`";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_assignment_types') . ' ORDER BY `type`';
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($type) = $xoopsDB->fetchRow($result)) {
         $all[] = "\"$type\"";
     }
 
     $txt = "<?php\n\$all_types=array(" . implode(",\n", $all) . ");\n?>";
 
-    $fp = fopen(XOOPS_ROOT_PATH . "/uploads/tad_assignment/allow_types.php", 'w');
+    $fp = fopen(XOOPS_ROOT_PATH . '/uploads/tad_assignment/allow_types.php', 'wb');
     fwrite($fp, $txt);
     fclose($fp);
 }
-/*-----------∞ı¶Ê∞ ß@ßP¬_∞œ----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+/*-----------Âü∑Ë°åÂãï‰ΩúÂà§Êñ∑ÂçÄ----------*/
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $assn = system_CleanVars($_REQUEST, 'assn', 0, 'int');
 $type = system_CleanVars($_REQUEST, 'type', '', 'string');
 
 switch ($op) {
-
-    //
-    case "add_type";
+    case 'add_type':
         add_type();
         header("location: {$_SERVER['PHP_SELF']}?t={$_FILES['file']['type']}");
         exit;
         break;
-
-    case "del_type";
+    case 'del_type':
         del_type($type);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
         break;
-
-    //πw≥]∞ ß@
+    //È†êË®≠Âãï‰Ωú
     default:
         add_type_form();
         break;
-
 }
 
-/*-----------®q•Xµ≤™G∞œ--------------*/
-include_once 'footer.php';
+/*-----------ÁßÄÂá∫ÁµêÊûúÂçÄ--------------*/
+require_once __DIR__ . '/footer.php';
